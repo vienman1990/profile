@@ -398,6 +398,65 @@ template {
   border-radius: 100%;
 }
 
+.home__nav {
+  position: fixed;
+  top: 30vh;
+  padding: 0.5rem;
+  border: 1px solid #34737b;
+  border-left: none;
+  width: 50px;
+  background-color: #fff;
+  z-index: 100;
+}
+.home__nav.--hide {
+  display: none;
+}
+@media (max-width: 1050px) {
+  .home__nav {
+    width: 100%;
+    top: 0;
+    border-right: none;
+  }
+}
+@media (max-width: 500px) {
+  .home__nav {
+    padding: 0;
+  }
+}
+.home__nav ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+@media (max-width: 1050px) {
+  .home__nav ul {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-line-pack: justify;
+    align-content: space-between;
+  }
+}
+.home__nav ul li {
+  margin: 1rem 0;
+}
+@media (max-width: 1050px) {
+  .home__nav ul li {
+    width: 100%;
+    text-align: center;
+    margin: 0.5rem 0;
+  }
+}
+.home__nav ul li a {
+  color: #34737b;
+  text-decoration: none;
+}
+@media (max-width: 500px) {
+  .home__nav ul li a {
+    font-size: 0.7rem;
+  }
+}
+
 .home__info h2 {
   margin: 3rem 0;
   font-size: 2rem;
@@ -549,4 +608,58 @@ template {
   padding: 0 1rem;
   line-height: 1.5rem;
   text-align: center;
+}
+
+@-webkit-keyframes rocketRun {
+  from {
+    -webkit-transform: translateY(-15px);
+    transform: translateY(-15px);
+  }
+  to {
+    -webkit-transform: translateY(0px);
+    transform: translateY(0px);
+  }
+}
+
+@keyframes rocketRun {
+  from {
+    -webkit-transform: translateY(-15px);
+    transform: translateY(-15px);
+  }
+  to {
+    -webkit-transform: translateY(0px);
+    transform: translateY(0px);
+  }
+}
+.home__rocket {
+  cursor: pointer;
+  position: fixed;
+  width: 50px;
+  right: 1rem;
+  bottom: 1rem;
+  background-color: #fff;
+  z-index: 100;
+  -webkit-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+}
+.home__rocket.--hide {
+  display: none;
+}
+.home__rocket.--down {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+.home__rocket:hover {
+  -webkit-transform: rotate(0deg);
+  transform: rotate(0deg);
+}
+.home__rocket .rocket_bottom {
+  -webkit-animation-duration: 0.15s;
+  animation-duration: 0.15s;
+  -webkit-animation-name: rocketRun;
+  animation-name: rocketRun;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
+  animation-direction: alternate;
 }
