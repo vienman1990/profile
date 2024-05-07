@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kinh Thánh 100 Tuần</title>
   <script src="//unpkg.com/alpinejs" defer></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-DgBDjHw6.css">
+  <link rel="stylesheet" crossorigin href="./assets/index-DgFjVNOt.css">
 </head>
 <body class="p-5 relative mb-36">
   <h1 class="text-center text-3xl font-bold text-blue-500 mb-10">Kinh Thánh 100 Tuần</h1>
@@ -18,14 +18,16 @@
 
         <div class="pl-5 flex flex-col">
           <template x-for="i in item.item">
-            <div class="text-indigo-600 hover:text-indigo-300 cursor-pointer" @click="play(i)" class="text-blue-500" x-text="i.title"></div>
+            <div :class="curItem == i ? 'animate-bounce my-3 font-bold cursor-pointer' : 'cursor-pointer' " @click="play(i)" >
+              <span class="text-indigo-600 hover:text-indigo-300" x-text="data_item[i].title"></span>
+            </div>
           </template>
         </div>
       </div>
     </template>
     <div class="fixed bottom-0 left-0 w-screen bg-white shadow border py-2">
       <div class="text-center text-indigo-600 my-2" x-text="curTitle"></div>
-      <audio autoplay class="mx-auto" controls x-effect="() => curMp3 && $el.load()">
+      <audio autoplay class="mx-auto" controls x-effect="() => curMp3 && $el.load()" @ended="nextPlay()">
         <source :src="curMp3" type="audio/mpeg" >
       </audio>
     </div>
@@ -35,18 +37,29 @@
     function dataInit() {
       return {
         data: [],
+        data_item: [],
+        curItem: '',
         curMp3: '',
         curTitle: '',
         source: 'https://tgpsaigon.net',
         async init() {
-          let response = await fetch('./src/data.json');
-          this.data = await response.json();
-          this.curMp3 = this.source + this.data['Tuần 1'].item[0].mp3;
-          this.curTitle = this.data['Tuần 1'].item[0].title;
+          let response_data = await fetch('./src/data.json');
+          let response_data_item = await fetch('./src/data_item.json');
+          this.data = await response_data.json();
+          this.data_item = await response_data_item.json();
+          let first_item = this.data['Tuần 1'].item[0];
+          this.curItem = first_item;
+          this.play(first_item);
         },
-        play(item) {
+        play(id) {
+          this.curItem = id;
+          let item = this.data_item[id];
           this.curMp3 = this.source + item.mp3;
           this.curTitle = item.title;
+        },
+        nextPlay()
+        {
+          this.play(this.curItem + 1);
         }
       }
     }
